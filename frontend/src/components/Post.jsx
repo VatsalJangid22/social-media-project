@@ -35,7 +35,7 @@ const Post = ({post}) => {
     const likeDislikeHandler = async () => {
         try {
             const action = liked ? 'dislike' : 'like';
-            const res = await axios.get(`http://localhost:7000/api/v1/post/${post?._id}/${action}`, {withCredentials:true});
+            const res = await axios.get(`https://social-media-project-v2n6.onrender.com/api/v1/post/${post?._id}/${action}`, {withCredentials:true});
             if(res.data.success){
                 const updatedLikes = liked ? postLikes - 1 : postLikes + 1;
                 setPostLikes(updatedLikes);

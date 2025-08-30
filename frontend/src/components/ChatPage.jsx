@@ -22,7 +22,7 @@ const ChatPage = () => {
 
     const sendMessageHandler = async () => {
         try {
-            const res = await axios.post(`http://localhost:7000/api/v1/message/send/${selectedUser._id}` , {textMessage}, {
+            const res = await axios.post(`https://social-media-project-v2n6.onrender.com/api/v1/message/send/${selectedUser._id}` , {textMessage}, {
                 headers:{
                     "Content-Type":"application/json",
                 },

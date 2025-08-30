@@ -8,7 +8,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: "https://social-media-project-v2n6.onrender.com",
     methods: ["GET", "POST"]
   }
 });

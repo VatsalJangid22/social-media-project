@@ -9,7 +9,7 @@ const useGetUserProfile = (userId) => {
     useEffect(() => {
         const fetchUserProfile = async() => {
             try {
-                const res = await axios.get(`http://localhost:7000/api/v1/user/${userId}/profile`, {withCredentials:true})
+                const res = await axios.get(`https://social-media-project-v2n6.onrender.com/api/v1/user/${userId}/profile`, {withCredentials:true})
                 if(res.data.success){
                     console.log(res.data);
                     dispatch(setUserProfile(res.data.user));

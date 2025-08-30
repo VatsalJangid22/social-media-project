@@ -36,7 +36,7 @@ const LeftSidebar = () => {
 
     const logoutHandler = async () => {
         try {
-            const res = axios.get("http://localhost:7000/api/v1/user/logout" , {withCredentials:true});
+            const res = axios.get("https://social-media-project-v2n6.onrender.com/api/v1/user/logout" , {withCredentials:true});
             if((await res).data.success){
                 dispatch(setAuthUser(null));
                 navigate("/login");

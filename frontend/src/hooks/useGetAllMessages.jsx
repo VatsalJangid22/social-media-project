@@ -10,7 +10,7 @@ const useGetAllMessages = (id) => {
     useEffect(() => {
         const fetchAllMessages = async() => {
             try {
-                const res = await axios.get(`http://localhost:7000/api/v1/message/all/${id}`, {withCredentials:true})
+                const res = await axios.get(`https://social-media-project-v2n6.onrender.com/api/v1/message/all/${id}`, {withCredentials:true})
                 if(res.data.success){
                     // console.log(res.data);
                     dispatch(setMessages(res.data.messages));

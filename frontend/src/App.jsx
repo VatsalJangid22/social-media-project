@@ -57,7 +57,7 @@ function App() {
 
     useEffect(() => {
         if(user){
-            const socketio = io("http://localhost:7000", {
+            const socketio = io("https://social-media-project-v2n6.onrender.com", {
                 query:{
                     userId: user._id,
                 },
