@@ -31,7 +31,10 @@ const Profile =  () => {
             if(res.data.success){
                 toast.success(res.data.message);
                 setIsFollowing(!isFollowing);
-                dispatch(setUserProfile(res.data.user));
+                dispatch(setUserProfile({
+                    ...userProfile,
+                    followers: res.data.user.followers,
+                  }));                  
             }
         } catch (error) {
             console.log(error);
