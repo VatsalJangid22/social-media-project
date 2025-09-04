@@ -210,18 +210,22 @@ export const followOrUnfollow = async (req,res) => {
                 User.updateOne({_id:followkrnevala},{$pull: {followings:jiskofollowkra}}),
                 User.updateOne({_id:jiskofollowkra},{$pull: {followers:followkrnevala}}),
             ])
-            return res.status(400).json({
+            const updatedUser = await User.findById(jiskofollowkra).select("-password");
+            return res.status(200).json({
                 message: "Unfollow successfull",
-                success : true
+                success : true,
+                user:updatedUser
             })
         }else{
             await Promise.all([
                 User.updateOne({_id:followkrnevala},{$push: {followings:jiskofollowkra}}),
                 User.updateOne({_id:jiskofollowkra},{$push: {followers:followkrnevala}}),
             ])
-            return res.status(400).json({
+            const updatedUser = await User.findById(jiskofollowkra).select("-password");
+            return res.status(200).json({
                 message: "Follow successfull",
-                success : true
+                success : true,
+                user:updatedUser
             })
         }
 

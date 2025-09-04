@@ -82,7 +82,7 @@ const Post = ({post}) => {
 
     const deletePostHandler = async () => {
         try {
-            const res = await axios.post(`http://localhost:7000/api/v1/post/${post?._id}/delete`,{}, {withCredentials:true});
+            const res = await axios.post(`https://social-media-project-v2n6.onrender.com/api/v1/post/${post?._id}/delete`,{}, {withCredentials:true});
 
             if(res.data.success){
                 toast.success(res.data.message)
@@ -122,8 +122,6 @@ const Post = ({post}) => {
                     </button>
                 </DialogTrigger>
                 <DialogContent className="flex flex-col items-center text-sm text-center gap-2">
-                    <Button variant="ghost" className="cursor-pointer w-fit text-[#ED4956] font-bold">Unfollow</Button>
-                    <Button variant="ghost" className="cursor-pointer w-fit">Save Post</Button>
                     {user && user?._id === post.author?._id && <Button onClick={deletePostHandler} variant="ghost" className="cursor-pointer w-fit">Delete Post</Button>}
                 </DialogContent>
             </Dialog>
@@ -164,9 +162,6 @@ const Post = ({post}) => {
                         <Send size={24} className='hover:text-gray-700'/>
                     </button>
                 </div>
-                <button className="p-1 hover:bg-gray-100 rounded-full transition-colors">
-                    <Bookmark size={24} className='hover:text-gray-700'/>
-                </button>
             </div>
 
             {/* Likes Count */}

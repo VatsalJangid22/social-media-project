@@ -1,19 +1,43 @@
 import useGetUserProfile from '@/hooks/useGetUserProfile'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserProfile } from '@/redux/authSlice';
+import axios from 'axios';
+import { toast } from 'sonner';
 
-const Profile = () => {
+const Profile =  () => {
     const params = useParams();
     const userId = params.id;
     useGetUserProfile(userId);
 
     const[activeTab, setActiveTab] = useState("posts");
-
     const {userProfile} = useSelector(store => store.auth);
     const {user} = useSelector(store => store.auth);
-    const {posts} = useSelector(store => store.post);
+    const [isFollowing, setIsFollowing] = useState(false);
+
+    useEffect(() => {
+    if (userProfile && userProfile.followers) {
+        setIsFollowing(userProfile.followers.includes(user._id));
+    }
+    }, [userProfile, user._id]);
+    
+    const dispatch = useDispatch();
+    
+    const followOrUnfollowHandler = async (userId) => {
+        try {
+            const res = await axios.post(`https://social-media-project-v2n6.onrender.com/api/v1/user/followorunfollow/${userId}`,{}, {withCredentials:true});
+            if(res.data.success){
+                toast.success(res.data.message);
+                setIsFollowing(!isFollowing);
+                dispatch(setUserProfile(res.data.user));
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.data.message);
+        }
+    }
 
     // const selectedUserPosts = posts.filter((post) => post.author._id === userProfile._id);
     // console.log("🚀Rocket ~ selectedUserPosts:", selectedUserPosts)
@@ -74,12 +98,12 @@ const Profile = () => {
                                             </Link>
                                         ) : (
                                             <>
-                                                {userProfile.isFollowing ? (
-                                                    <button className="px-6 py-2 sm:py-3 rounded-lg border font-semibold bg-gray-100 hover:bg-gray-200 transition text-sm sm:text-base shadow-sm">
+                                                {isFollowing ? (
+                                                    <button onClick={()=>followOrUnfollowHandler(userProfile._id)} className="px-6 py-2 sm:py-3 rounded-lg border font-semibold bg-gray-100 hover:bg-gray-200 transition text-sm sm:text-base shadow-sm">
                                                         Unfollow
                                                     </button>
                                                 ) : (
-                                                    <button className="px-6 py-2 sm:py-3 rounded-lg border font-semibold bg-blue-500 text-white hover:bg-blue-600 transition text-sm sm:text-base shadow-sm">
+                                                    <button onClick={()=>followOrUnfollowHandler(userProfile._id)} className="px-6 py-2 sm:py-3 rounded-lg border font-semibold bg-blue-500 text-white hover:bg-blue-600 transition text-sm sm:text-base shadow-sm">
                                                         Follow
                                                     </button>
                                                 )}
@@ -104,15 +128,6 @@ const Profile = () => {
                             onClick={() => setActiveTab("posts")}
                         >
                             Posts
-                        </h2>
-
-                        <h2
-                            className={`text-lg sm:text-xl mb-6 cursor-pointer ${
-                            activeTab === "saved" ? "font-bold text-black" : "font-medium text-gray-500"
-                            }`}
-                            onClick={() => setActiveTab("saved")}
-                        >
-                            Saved
                         </h2>
                     </div>
                     {activeTab === "posts" ? (
