@@ -16,7 +16,6 @@ const Comment = ({comment}) => {
                 <span className='font-semibold text-sm text-gray-900'>
                     {comment?.author?.username || "User"}
                 </span>
-                <span className='text-xs text-gray-500'>Just now</span>
             </div>
             <p className='text-sm text-gray-700 mt-1 break-words'>
                 {comment?.content || comment?.text || "No content"}

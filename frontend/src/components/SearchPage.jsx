@@ -3,6 +3,7 @@ import { Input } from './ui/input'
 import { Button } from './ui/button'
 import axios from 'axios';
 import SearchedUsers from './SearchedUsers';
+import { toast } from 'sonner';
 
 const SearchPage = () => {
     const [search, setSearch] = useState("");
@@ -16,21 +17,22 @@ const SearchPage = () => {
             }
         } catch (error) {
             console.log(error);
+            toast.error(error?.response?.data?.message || "Search failed");
         }
     }
   return (
-    <div>
-        <div className='flex flex-col gap-4'>
-        <Input
-            type="text"
-            placeholder="Search"
-            className="w-2xl mx-auto"
-            value={search}
-            onChange={(e)=>setSearch(e.target.value)}
-        ></Input>
-        <Button className='w-2xl mx-auto' onClick={searchHandler}>Search</Button>
+    <div className='max-w-2xl mx-auto px-3 sm:px-4 py-4 sm:py-6'>
+        <div className='flex flex-col gap-3 sm:gap-4'>
+          <Input
+              type="text"
+              placeholder="Search"
+              className="w-full"
+              value={search}
+              onChange={(e)=>setSearch(e.target.value)}
+          />
+          <Button className='w-full' onClick={searchHandler}>Search</Button>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3 sm:gap-4 mt-4">
             {users.map((user)=>(
                 <SearchedUsers key={user._id} user={user}/>
             ))}

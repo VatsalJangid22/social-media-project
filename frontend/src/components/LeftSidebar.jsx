@@ -70,14 +70,14 @@ const LeftSidebar = () => {
                 />
             </div>
         </div>
-        <div>
+        <div className="px-1 xl:px-3">
             {
                 sidebarItems.map((item, index) => (
                     item.text === "Notification" ? (
                         <Popover key={index}>
                             <PopoverTrigger asChild>
                                 <div
-                                    className='flex items-center gap-3 hover:bg-gray-100 cursor-pointer rounded-lg p-3 my-3 justify-center xl:justify-start'
+                                    className='flex items-center gap-3 hover:bg-gray-100 cursor-pointer rounded-lg p-3 my-3 justify-center xl:justify-start touch-target'
                                 >
                                     {/* Heart icon with notification count */}
                                     <div className="relative">
@@ -118,7 +118,7 @@ const LeftSidebar = () => {
                         <div
                             onClick={() => sidebarHandler(item.text)}
                             key={index}
-                            className='flex items-center gap-3 hover:bg-gray-100 cursor-pointer rounded-lg p-3 my-3 justify-center xl:justify-start'
+                            className='flex items-center gap-3 hover:bg-gray-100 cursor-pointer rounded-lg p-3 my-3 justify-center xl:justify-start touch-target'
                         >
                             {item.icon}
                             <span className="hidden xl:inline">{item.text}</span>

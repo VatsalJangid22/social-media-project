@@ -5,14 +5,12 @@ import { useNavigate } from 'react-router-dom'
 const SearchedUsers = ({user}) => {
     const navigate = useNavigate();
   return (
-    <div className='flex items-center gap-4' onClick={()=>navigate(`/profile/${user._id}`)}>
-        <div className='flex items-center gap-4'>
-            <Avatar>
-                <AvatarImage src={user.profilePicture}/>
-                <AvatarFallback>{user.username.charAt(0).toUpperCase()}</AvatarFallback>
-            </Avatar>
-            <h1 className='font-bold text-sm text-gray-900'>{user.username}</h1>
-        </div>
+    <div className='flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 cursor-pointer' onClick={()=>navigate(`/profile/${user._id}`)}>
+        <Avatar className="h-10 w-10">
+            <AvatarImage src={user.profilePicture}/>
+            <AvatarFallback>{user.username.charAt(0).toUpperCase()}</AvatarFallback>
+        </Avatar>
+        <h1 className='font-semibold text-sm text-gray-900 truncate'>{user.username}</h1>
     </div>
   )
 }

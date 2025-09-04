@@ -3,6 +3,7 @@ import { setPosts } from "@/redux/postSlice";
 import axios from "axios"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { toast } from "sonner";
 
 const useGetAllMessages = (id) => {
     const {selectedUser} = useSelector(store => store.auth);
@@ -17,6 +18,7 @@ const useGetAllMessages = (id) => {
                 }
             } catch (error) {
                 console.log(error);
+                toast.error(error?.response?.data?.message || "Failed to load messages");
             }
         }
         fetchAllMessages();

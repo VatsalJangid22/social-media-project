@@ -35,7 +35,7 @@ const Profile =  () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response.data.message);
+            toast.error(error?.response?.data?.message || "Failed to update follow state");
         }
     }
 
@@ -44,7 +44,7 @@ const Profile =  () => {
     
   return (
     <div className="min-h-screen pb-16 lg:pb-0">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8">
             {/* Profile Header */}
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 mt-4 sm:mt-8 lg:mt-12">
                 <div className="p-6 sm:p-8">

@@ -65,16 +65,16 @@ const EditProfile = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.res.data.message);
+            toast.error(error?.response?.data?.message || "Failed to update profile");
         }
     }
 
   return (
-    <div className='flex justify-center items-center p-12 gap-6 flex-col'>
-        <div className='flex flex-col gap-6 w-xl'>
+    <div className='flex justify-center items-center px-3 sm:px-6 lg:px-8 py-6 gap-6 flex-col'>
+        <div className='flex flex-col gap-6 w-full max-w-3xl'>
             <h1 className='font-bold text-2xl'>Edit Profile</h1>
-            <div className='flex flex-row bg-gray-100 rounded-md border-2 border-gray-200'>
-            <div className='mr-6 flex flex-col items-center p-4'>
+            <div className='flex flex-col md:flex-row bg-gray-100 rounded-md border border-gray-200'>
+            <div className='md:mr-6 flex flex-col items-center p-4'>
                 <Avatar className="h-24 w-24 sm:h-32 sm:w-32 lg:h-40 lg:w-40 shadow-lg mb-4">
                     <AvatarImage src={
                     input.profilePicture
@@ -105,7 +105,7 @@ const EditProfile = () => {
                     Update profile picture
                 </Button>
             </div>
-            <div className='ml-6 mr-6 flex justify-center items-center flex-col p-12'>
+            <div className='md:ml-6 md:mr-6 flex justify-center items-center flex-col p-6 md:p-12 text-center md:text-left'>
                 <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
                     {user?.username || "Username"}
                 </h1>
@@ -114,7 +114,7 @@ const EditProfile = () => {
                 </p>
             </div>
         </div>
-        <div className='flex flex-col pt-6'>
+        <div className='flex flex-col pt-6 w-full max-w-3xl'>
             <span className='font-bold mb-2'>Bio</span>
             <Textarea
             value={input.bio || ""}
@@ -123,7 +123,7 @@ const EditProfile = () => {
             placeholder="Add or update your bio..."
             />
         </div>
-        <div className='flex flex-col'>
+        <div className='flex flex-col w-full max-w-3xl'>
             <span className='font-bold mb-2'>Gender</span>
             <Select value={input.gender} onValueChange={selectChangeHandler}>
             <SelectTrigger className="w-[180px]">
@@ -135,7 +135,7 @@ const EditProfile = () => {
             </SelectContent>
             </Select>
         </div>
-        <div className='flex flex-col'>
+        <div className='flex flex-col w-full max-w-3xl'>
             {
                 loading ? (<Button className="cursor-pointer bg-[#0095F6] hover:bg-[#0087f6]" disabled ><Loader2 className='h-4 w-4 animate-spin'/>Please wait</Button>) : (<Button onClick={editProfileHandler} className="cursor-pointer bg-[#0095F6] hover:bg-[#0087f6]" >Submit</Button>)
             }

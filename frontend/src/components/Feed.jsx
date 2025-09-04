@@ -3,8 +3,8 @@ import Posts from './Posts'
 
 const Feed = () => {
   return (
-    <div className='flex-1 py-4 md:py-8 flex flex-col items-center'>
-        <div className="w-full max-w-2xl xl:max-w-[450px] mx-auto px-4 md:px-6">
+    <div className='flex-1 py-4 sm:py-6 flex flex-col items-center'>
+        <div className="w-full max-w-2xl mx-auto px-3 sm:px-4">
             <Posts/>
         </div>
     </div>
