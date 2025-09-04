@@ -89,7 +89,7 @@ export const login = async (req, res) => {
         userSafe.posts = populatedPosts.filter(post => post !== null);
 
         return res
-            .cookie("token", token, { httpOnly: true, sameSite: true, maxAge: 1 * 24 * 60 * 60 * 1000 })
+            .cookie("token", token, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 1 * 24 * 60 * 60 * 1000, path: '/' })
             .json({
                 message: `Welcome back ${userSafe.username}`,
                 success: true,
@@ -103,7 +103,9 @@ export const login = async (req, res) => {
 
 export const logout = async (_,res) => {
     try {
-        return res.cookie("token", "", {maxAge:0}).json({
+        return res
+        .clearCookie("token", { httpOnly: true, sameSite: 'None', secure: true, path: '/' })
+        .json({
             message: "Logout successfully",
             success: true,
         })

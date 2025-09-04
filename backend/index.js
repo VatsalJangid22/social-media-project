@@ -15,9 +15,16 @@ dotenv.config();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+// Trust proxy is required for secure cookies on platforms like Render/Heroku/NGINX
+app.set('trust proxy', 1);
 
 const corsOptions = {
-  origin: ["https://social-media-project-v2n6.onrender.com","http://localhost:7000", "http://localhost:5173"],
+  origin: [
+    "https://social-media-project-v2n6.onrender.com",
+    "http://localhost:7000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+  ],
   credentials: true,
 };
 app.use(cors(corsOptions));

@@ -10,6 +10,7 @@ import { setAuthUser } from '@/redux/authSlice'
 import CreatePost from './CreatePost'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { Button } from './ui/button'
+import store, { persistor, resetStore } from '@/redux/store'
 
 const LeftSidebar = () => {
 
@@ -36,14 +37,15 @@ const LeftSidebar = () => {
 
     const logoutHandler = async () => {
         try {
-            const res = axios.get("https://social-media-project-v2n6.onrender.com/api/v1/user/logout" , {withCredentials:true});
-            if((await res).data.success){
-                dispatch(setAuthUser(null));
+            const res = await axios.get("https://social-media-project-v2n6.onrender.com/api/v1/user/logout" , {withCredentials:true});
+            if(res.data.success){
+                store.dispatch(resetStore());
+                await persistor.purge();
                 navigate("/login");
-                toast.success((await res).data.message);
+                toast.success(res.data.message);
             }
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error?.response?.data?.message || "Logout failed");
         }
     }
 

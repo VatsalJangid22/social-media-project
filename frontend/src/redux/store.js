@@ -6,6 +6,7 @@ import chatSlice from "./chatSlice.js"
 import rtnSlice from "./rtnSlice.js"
 import {
   persistReducer,
+  persistStore,
   FLUSH,
   REHYDRATE,
   PAUSE,
@@ -21,13 +22,28 @@ const persistConfig = {
   storage,
 }
 
-const rootReducer = combineReducers({
+// Action type to reset the entire Redux state
+const RESET_STORE = 'RESET_STORE'
+export const resetStore = () => ({ type: RESET_STORE })
+
+const appReducer = combineReducers({
     auth: authSlice,
     post: postSlice,
     socketio: socketSlice,
     chat: chatSlice,
     rtn: rtnSlice,
 })
+
+// Root reducer that resets state on RESET_STORE
+const rootReducer = (state, action) => {
+  if (action.type === RESET_STORE) {
+    // Clear persisted storage
+    storage.removeItem('persist:root')
+    // Reset in-memory state
+    return appReducer(undefined, action)
+  }
+  return appReducer(state, action)
+}
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
@@ -40,5 +56,7 @@ const store = configureStore({
       },
     }),
 })
+
+export const persistor = persistStore(store)
 
 export default store;
