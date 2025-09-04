@@ -8,7 +8,7 @@ const statusMap = {
 };
 
 const connectDB = async () => {
-    try {
+    try { 
         const dbConnection = await mongoose.connect(process.env.MONGODB_URI);
         console.log('MONGODB connection status:', statusMap[dbConnection.connection.readyState]);
     } catch (error) {
