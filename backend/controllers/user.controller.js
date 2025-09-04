@@ -229,3 +229,29 @@ export const followOrUnfollow = async (req,res) => {
         console.log(error);
     }
 }
+
+export const searchUsersByUsername = async (req, res) => {
+    try {
+        const { q } = req.query;
+        if (!q || q.trim().length === 0) {
+            return res.status(400).json({
+                message: "Query parameter 'q' is required",
+                success: false,
+            });
+        }
+
+        const regex = new RegExp(q, 'i');
+
+        const users = await User.find({ username: { $regex: regex } })
+            .select("-password")
+            .limit(20);
+
+        return res.status(200).json({
+            success: true,
+            users,
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: "Server error" });
+    }
+}
